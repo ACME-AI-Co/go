@@ -41,7 +41,7 @@ To use a local version of this library from source in another project, edit the 
 directive. This can be done through the CLI with the following:
 
 ```sh
-$ go mod edit -replace github.com/stainless-sdks/acme-ai-sdk-go=/path/to/acme-ai-sdk-go
+$ go mod edit -replace github.com/ACME-AI-Co/go=/path/to/go
 ```
 
 ## Running tests

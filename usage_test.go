@@ -9,9 +9,9 @@ import (
 	"os"
 	"testing"
 
-	"github.com/stainless-sdks/acme-ai-sdk-go"
-	"github.com/stainless-sdks/acme-ai-sdk-go/internal/testutil"
-	"github.com/stainless-sdks/acme-ai-sdk-go/option"
+	"github.com/ACME-AI-Co/go"
+	"github.com/ACME-AI-Co/go/internal/testutil"
+	"github.com/ACME-AI-Co/go/option"
 )
 
 func TestUsage(t *testing.T) {

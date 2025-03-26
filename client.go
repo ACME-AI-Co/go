@@ -7,8 +7,8 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/stainless-sdks/acme-ai-sdk-go/internal/requestconfig"
-	"github.com/stainless-sdks/acme-ai-sdk-go/option"
+	"github.com/ACME-AI-Co/go/internal/requestconfig"
+	"github.com/ACME-AI-Co/go/option"
 )
 
 // Client creates a struct with services and top level methods that help with
