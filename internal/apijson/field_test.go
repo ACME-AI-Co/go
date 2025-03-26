@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/stainless-sdks/acme-ai-sdk-go/internal/param"
+	"github.com/ACME-AI-Co/go/internal/param"
 )
 
 type Struct struct {

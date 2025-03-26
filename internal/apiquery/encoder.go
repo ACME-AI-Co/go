@@ -9,7 +9,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/stainless-sdks/acme-ai-sdk-go/internal/param"
+	"github.com/ACME-AI-Co/go/internal/param"
 )
 
 var encoders sync.Map // map[reflect.Type]encoderFunc
