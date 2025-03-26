@@ -18,11 +18,11 @@ import (
 	"strings"
 	"time"
 
-	"github.com/stainless-sdks/acme-ai-sdk-go/internal"
-	"github.com/stainless-sdks/acme-ai-sdk-go/internal/apierror"
-	"github.com/stainless-sdks/acme-ai-sdk-go/internal/apiform"
-	"github.com/stainless-sdks/acme-ai-sdk-go/internal/apiquery"
-	"github.com/stainless-sdks/acme-ai-sdk-go/internal/param"
+	"github.com/ACME-AI-Co/go/internal"
+	"github.com/ACME-AI-Co/go/internal/apierror"
+	"github.com/ACME-AI-Co/go/internal/apiform"
+	"github.com/ACME-AI-Co/go/internal/apiquery"
+	"github.com/ACME-AI-Co/go/internal/param"
 )
 
 func getDefaultHeaders() map[string]string {

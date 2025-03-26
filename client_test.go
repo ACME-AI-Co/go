@@ -12,9 +12,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/stainless-sdks/acme-ai-sdk-go"
-	"github.com/stainless-sdks/acme-ai-sdk-go/internal"
-	"github.com/stainless-sdks/acme-ai-sdk-go/option"
+	"github.com/ACME-AI-Co/go"
+	"github.com/ACME-AI-Co/go/internal"
+	"github.com/ACME-AI-Co/go/option"
 )
 
 type closureTransport struct {

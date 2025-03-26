@@ -3,7 +3,7 @@
 package acmeaisdk
 
 import (
-	"github.com/stainless-sdks/acme-ai-sdk-go/internal/apierror"
+	"github.com/ACME-AI-Co/go/internal/apierror"
 )
 
 type Error = apierror.Error
