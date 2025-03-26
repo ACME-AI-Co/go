@@ -1,4 +1,4 @@
-module github.com/stainless-sdks/acme-ai-sdk-go
+module github.com/ACME-AI-Co/go
 
 go 1.21
 

@@ -1,6 +1,6 @@
 # Acme AI SDK Go API Library
 
-<a href="https://pkg.go.dev/github.com/stainless-sdks/acme-ai-sdk-go"><img src="https://pkg.go.dev/badge/github.com/stainless-sdks/acme-ai-sdk-go.svg" alt="Go Reference"></a>
+<a href="https://pkg.go.dev/github.com/ACME-AI-Co/go"><img src="https://pkg.go.dev/badge/github.com/ACME-AI-Co/go.svg" alt="Go Reference"></a>
 
 The Acme AI SDK Go library provides convenient access to [the Acme AI SDK REST
 API](https://docs.acme-ai-sdk.com) from applications written in Go. The full API of this library can be found in [api.md](api.md).
@@ -9,17 +9,25 @@ It is generated with [Stainless](https://www.stainless.com/).
 
 ## Installation
 
+<!-- x-release-please-start-version -->
+
 ```go
 import (
-	"github.com/stainless-sdks/acme-ai-sdk-go" // imported as acmeaisdk
+	"github.com/ACME-AI-Co/go" // imported as acmeaisdk
 )
 ```
 
+<!-- x-release-please-end -->
+
 Or to pin the version:
 
+<!-- x-release-please-start-version -->
+
 ```sh
-go get -u 'github.com/stainless-sdks/acme-ai-sdk-go@v0.0.1-alpha.0'
+go get -u 'github.com/ACME-AI-Co/go@v0.0.1-alpha.0'
 ```
+
+<!-- x-release-please-end -->
 
 ## Requirements
 
@@ -38,8 +46,8 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/stainless-sdks/acme-ai-sdk-go"
-	"github.com/stainless-sdks/acme-ai-sdk-go/option"
+	"github.com/ACME-AI-Co/go"
+	"github.com/ACME-AI-Co/go/option"
 )
 
 func main() {
@@ -149,7 +157,7 @@ client.Files.FileNew(context.TODO(), ...,
 )
 ```
 
-See the [full list of request options](https://pkg.go.dev/github.com/stainless-sdks/acme-ai-sdk-go/option).
+See the [full list of request options](https://pkg.go.dev/github.com/ACME-AI-Co/go/option).
 
 ### Pagination
 
@@ -381,7 +389,7 @@ This package generally follows [SemVer](https://semver.org/spec/v2.0.0.html) con
 
 We take backwards-compatibility seriously and work hard to ensure you can rely on a smooth upgrade experience.
 
-We are keen for your feedback; please open an [issue](https://www.github.com/stainless-sdks/acme-ai-sdk-go/issues) with questions, bugs, or suggestions.
+We are keen for your feedback; please open an [issue](https://www.github.com/ACME-AI-Co/go/issues) with questions, bugs, or suggestions.
 
 ## Contributing
 

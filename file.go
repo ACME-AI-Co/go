@@ -13,12 +13,12 @@ import (
 	"net/url"
 	"time"
 
-	"github.com/stainless-sdks/acme-ai-sdk-go/internal/apiform"
-	"github.com/stainless-sdks/acme-ai-sdk-go/internal/apijson"
-	"github.com/stainless-sdks/acme-ai-sdk-go/internal/apiquery"
-	"github.com/stainless-sdks/acme-ai-sdk-go/internal/param"
-	"github.com/stainless-sdks/acme-ai-sdk-go/internal/requestconfig"
-	"github.com/stainless-sdks/acme-ai-sdk-go/option"
+	"github.com/ACME-AI-Co/go/internal/apiform"
+	"github.com/ACME-AI-Co/go/internal/apijson"
+	"github.com/ACME-AI-Co/go/internal/apiquery"
+	"github.com/ACME-AI-Co/go/internal/param"
+	"github.com/ACME-AI-Co/go/internal/requestconfig"
+	"github.com/ACME-AI-Co/go/option"
 )
 
 // FileService contains methods and other services that help with interacting with
