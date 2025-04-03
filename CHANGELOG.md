@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.1.0-alpha.3 (2025-04-03)
+
+Full Changelog: [v0.1.0-alpha.2...v0.1.0-alpha.3](https://github.com/ACME-AI-Co/go/compare/v0.1.0-alpha.2...v0.1.0-alpha.3)
+
+### Bug Fixes
+
+* **client:** return error on bad custom url instead of panic ([#8](https://github.com/ACME-AI-Co/go/issues/8)) ([e618f98](https://github.com/ACME-AI-Co/go/commit/e618f98e4387ea5e53f248c6cd7f1e4994fe8c7e))
+
+
+### Chores
+
+* fix typos ([#6](https://github.com/ACME-AI-Co/go/issues/6)) ([0a3f906](https://github.com/ACME-AI-Co/go/commit/0a3f9060c9e0d9ceedf4a80b49ea5df8e0c1d1e7))
+
 ## 0.1.0-alpha.2 (2025-03-26)
 
 Full Changelog: [v0.1.0-alpha.1...v0.1.0-alpha.2](https://github.com/ACME-AI-Co/go/compare/v0.1.0-alpha.1...v0.1.0-alpha.2)
