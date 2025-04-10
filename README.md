@@ -55,7 +55,7 @@ func main() {
 		option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("ACME_AI_SDK_BEARER_TOKEN")
 	)
 	response, err := client.Files.FileNew(context.TODO(), acmeaisdk.FileFileNewParams{
-		File: acmeaisdk.F(io.Reader(bytes.NewBuffer([]byte("some file contents")))),
+		File: acmeaisdk.F(io.Reader(bytes.NewBuffer([]byte("REPLACE_ME")))),
 	})
 	if err != nil {
 		panic(err.Error())
@@ -179,7 +179,7 @@ To handle errors, we recommend that you use the `errors.As` pattern:
 
 ```go
 _, err := client.Files.FileNew(context.TODO(), acmeaisdk.FileFileNewParams{
-	File: acmeaisdk.F(io.Reader(bytes.NewBuffer([]byte("some file contents")))),
+	File: acmeaisdk.F(io.Reader(bytes.NewBuffer([]byte("REPLACE_ME")))),
 })
 if err != nil {
 	var apierr *acmeaisdk.Error
@@ -208,7 +208,7 @@ defer cancel()
 client.Files.FileNew(
 	ctx,
 	acmeaisdk.FileFileNewParams{
-		File: acmeaisdk.F(io.Reader(bytes.NewBuffer([]byte("some file contents")))),
+		File: acmeaisdk.F(io.Reader(bytes.NewBuffer([]byte("REPLACE_ME")))),
 	},
 	// This sets the per-retry timeout
 	option.WithRequestTimeout(20*time.Second),
@@ -264,7 +264,7 @@ client := acmeaisdk.NewClient(
 client.Files.FileNew(
 	context.TODO(),
 	acmeaisdk.FileFileNewParams{
-		File: acmeaisdk.F(io.Reader(bytes.NewBuffer([]byte("some file contents")))),
+		File: acmeaisdk.F(io.Reader(bytes.NewBuffer([]byte("REPLACE_ME")))),
 	},
 	option.WithMaxRetries(5),
 )
@@ -281,7 +281,7 @@ var response *http.Response
 response, err := client.Files.FileNew(
 	context.TODO(),
 	acmeaisdk.FileFileNewParams{
-		File: acmeaisdk.F(io.Reader(bytes.NewBuffer([]byte("some file contents")))),
+		File: acmeaisdk.F(io.Reader(bytes.NewBuffer([]byte("REPLACE_ME")))),
 	},
 	option.WithResponseInto(&response),
 )

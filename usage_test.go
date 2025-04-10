@@ -27,7 +27,7 @@ func TestUsage(t *testing.T) {
 		option.WithBearerToken("My Bearer Token"),
 	)
 	response, err := client.Files.FileNew(context.TODO(), acmeaisdk.FileFileNewParams{
-		File: acmeaisdk.F(io.Reader(bytes.NewBuffer([]byte("some file contents")))),
+		File: acmeaisdk.F(io.Reader(bytes.NewBuffer([]byte("REPLACE_ME")))),
 	})
 	if err != nil {
 		t.Error(err)
