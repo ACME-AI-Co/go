@@ -29,7 +29,7 @@ func main() {
 	}
 
 	// Upload the file
-	fileResponse, err := client.Files.FileNew(context.Background(), params)
+	fileResponse := client.Files.FileNew(context.Background(), params)
 	if err != nil {
 		fmt.Printf("Error uploading file: %v\n", err)
 		return
@@ -39,7 +39,11 @@ func main() {
 
 	for {
 		// List files to check status
-		filesResponse, err = client.Files.Fileslist(ctx, acmeaisdk.FileFileslistParams{})
+		filesResponse, err = client.Files.Fileslist(ctx, acmeaisdk.FileFileslistParams{
+			Status: param.Field[acmeaisdk.FileFileslistParamsStatus]{
+				Value: acmeaisdk.FileFileNewResponseStatusProcessing,
+			},
+		})
 		if err != nil {
 			fmt.Printf("Error listing files: %v\n", err)
 			return
