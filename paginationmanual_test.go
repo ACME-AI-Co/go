@@ -3,9 +3,7 @@
 package acmeaisdk_test
 
 import (
-	"bytes"
 	"context"
-	"io"
 	"os"
 	"testing"
 
@@ -14,7 +12,7 @@ import (
 	"github.com/ACME-AI-Co/go/option"
 )
 
-func TestUsage(t *testing.T) {
+func TestManualPagination(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -26,12 +24,24 @@ func TestUsage(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithBearerToken("My Bearer Token"),
 	)
-	response, err := client.Files.FileNew(context.TODO(), acmeaisdk.FileFileNewParams{
-		File: acmeaisdk.F(io.Reader(bytes.NewBuffer([]byte("REPLACE_ME")))),
+	page, err := client.Files.Fileslist(context.TODO(), acmeaisdk.FileFileslistParams{
+		Limit:  acmeaisdk.F(int64(20)),
+		Offset: acmeaisdk.F(int64(20)),
 	})
 	if err != nil {
-		t.Error(err)
-		return
+		t.Fatalf("err should be nil: %s", err.Error())
 	}
-	t.Logf("%+v\n", response.FileID)
+	for _, file := range page.Files {
+		t.Logf("%+v\n", file.FileID)
+	}
+	// Prism mock isn't going to give us real pagination
+	page, err = page.GetNextPage()
+	if err != nil {
+		t.Fatalf("err should be nil: %s", err.Error())
+	}
+	if page != nil {
+		for _, file := range page.Files {
+			t.Logf("%+v\n", file.FileID)
+		}
+	}
 }

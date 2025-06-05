@@ -2,8 +2,8 @@
 
 <a href="https://pkg.go.dev/github.com/ACME-AI-Co/go"><img src="https://pkg.go.dev/badge/github.com/ACME-AI-Co/go.svg" alt="Go Reference"></a>
 
-The Acme AI SDK Go library provides convenient access to [the Acme AI SDK REST
-API](https://docs.acme-ai-sdk.com) from applications written in Go. The full API of this library can be found in [api.md](api.md).
+The Acme AI SDK Go library provides convenient access to the [Acme AI SDK REST API](https://docs.acme-ai-sdk.com)
+from applications written in Go.
 
 It is generated with [Stainless](https://www.stainless.com/).
 
@@ -24,7 +24,7 @@ Or to pin the version:
 <!-- x-release-please-start-version -->
 
 ```sh
-go get -u 'github.com/ACME-AI-Co/go@v0.1.0-alpha.2'
+go get -u 'github.com/ACME-AI-Co/go@v0.1.0-alpha.3'
 ```
 
 <!-- x-release-please-end -->
@@ -55,7 +55,7 @@ func main() {
 		option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("ACME_AI_SDK_BEARER_TOKEN")
 	)
 	response, err := client.Files.FileNew(context.TODO(), acmeaisdk.FileFileNewParams{
-		File: acmeaisdk.F(io.Reader(bytes.NewBuffer([]byte("some file contents")))),
+		File: acmeaisdk.F(io.Reader(bytes.NewBuffer([]byte("REPLACE_ME")))),
 	})
 	if err != nil {
 		panic(err.Error())
@@ -165,8 +165,39 @@ This library provides some conveniences for working with paginated list endpoint
 
 You can use `.ListAutoPaging()` methods to iterate through items across all pages:
 
+```go
+iter := client.Files.FileslistAutoPaging(context.TODO(), acmeaisdk.FileFileslistParams{
+	Limit:  acmeaisdk.F(int64(20)),
+	Offset: acmeaisdk.F(int64(20)),
+})
+// Automatically fetches more pages as needed.
+for iter.Next() {
+	fileFileslistResponse := iter.Current()
+	fmt.Printf("%+v\n", fileFileslistResponse)
+}
+if err := iter.Err(); err != nil {
+	panic(err.Error())
+}
+```
+
 Or you can use simple `.List()` methods to fetch a single page and receive a standard response object
 with additional helper methods like `.GetNextPage()`, e.g.:
+
+```go
+page, err := client.Files.Fileslist(context.TODO(), acmeaisdk.FileFileslistParams{
+	Limit:  acmeaisdk.F(int64(20)),
+	Offset: acmeaisdk.F(int64(20)),
+})
+for page != nil {
+	for _, file := range page.Files {
+		fmt.Printf("%+v\n", file)
+	}
+	page, err = page.GetNextPage()
+}
+if err != nil {
+	panic(err.Error())
+}
+```
 
 ### Errors
 
@@ -179,7 +210,7 @@ To handle errors, we recommend that you use the `errors.As` pattern:
 
 ```go
 _, err := client.Files.FileNew(context.TODO(), acmeaisdk.FileFileNewParams{
-	File: acmeaisdk.F(io.Reader(bytes.NewBuffer([]byte("some file contents")))),
+	File: acmeaisdk.F(io.Reader(bytes.NewBuffer([]byte("REPLACE_ME")))),
 })
 if err != nil {
 	var apierr *acmeaisdk.Error
@@ -208,7 +239,7 @@ defer cancel()
 client.Files.FileNew(
 	ctx,
 	acmeaisdk.FileFileNewParams{
-		File: acmeaisdk.F(io.Reader(bytes.NewBuffer([]byte("some file contents")))),
+		File: acmeaisdk.F(io.Reader(bytes.NewBuffer([]byte("REPLACE_ME")))),
 	},
 	// This sets the per-retry timeout
 	option.WithRequestTimeout(20*time.Second),
@@ -264,7 +295,7 @@ client := acmeaisdk.NewClient(
 client.Files.FileNew(
 	context.TODO(),
 	acmeaisdk.FileFileNewParams{
-		File: acmeaisdk.F(io.Reader(bytes.NewBuffer([]byte("some file contents")))),
+		File: acmeaisdk.F(io.Reader(bytes.NewBuffer([]byte("REPLACE_ME")))),
 	},
 	option.WithMaxRetries(5),
 )
@@ -281,7 +312,7 @@ var response *http.Response
 response, err := client.Files.FileNew(
 	context.TODO(),
 	acmeaisdk.FileFileNewParams{
-		File: acmeaisdk.F(io.Reader(bytes.NewBuffer([]byte("some file contents")))),
+		File: acmeaisdk.F(io.Reader(bytes.NewBuffer([]byte("REPLACE_ME")))),
 	},
 	option.WithResponseInto(&response),
 )

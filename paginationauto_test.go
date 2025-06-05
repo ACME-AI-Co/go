@@ -3,9 +3,7 @@
 package acmeaisdk_test
 
 import (
-	"bytes"
 	"context"
-	"io"
 	"os"
 	"testing"
 
@@ -14,7 +12,7 @@ import (
 	"github.com/ACME-AI-Co/go/option"
 )
 
-func TestUsage(t *testing.T) {
+func TestAutoPagination(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -26,12 +24,16 @@ func TestUsage(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithBearerToken("My Bearer Token"),
 	)
-	response, err := client.Files.FileNew(context.TODO(), acmeaisdk.FileFileNewParams{
-		File: acmeaisdk.F(io.Reader(bytes.NewBuffer([]byte("REPLACE_ME")))),
+	iter := client.Files.FileslistAutoPaging(context.TODO(), acmeaisdk.FileFileslistParams{
+		Limit:  acmeaisdk.F(int64(20)),
+		Offset: acmeaisdk.F(int64(20)),
 	})
-	if err != nil {
-		t.Error(err)
-		return
+	// Prism mock isn't going to give us real pagination
+	for i := 0; i < 3 && iter.Next(); i++ {
+		file := iter.Current()
+		t.Logf("%+v\n", file.FileID)
 	}
-	t.Logf("%+v\n", response.FileID)
+	if err := iter.Err(); err != nil {
+		t.Fatalf("err should be nil: %s", err.Error())
+	}
 }

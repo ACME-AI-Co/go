@@ -19,6 +19,7 @@ import (
 	"github.com/ACME-AI-Co/go/internal/param"
 	"github.com/ACME-AI-Co/go/internal/requestconfig"
 	"github.com/ACME-AI-Co/go/option"
+	"github.com/ACME-AI-Co/go/packages/pagination"
 )
 
 // FileService contains methods and other services that help with interacting with
@@ -62,13 +63,27 @@ func (r *FileService) FileSearch(ctx context.Context, fileID string, query FileF
 	return
 }
 
-// Retrieve the processing status of files. Can be filtered by status and sorted by
-// upload time.
-func (r *FileService) Fileslist(ctx context.Context, query FileFileslistParams, opts ...option.RequestOption) (res *FileFileslistResponse, err error) {
+// Retrieve a list of files. Can be filtered by status and sorted by upload time.
+func (r *FileService) Fileslist(ctx context.Context, query FileFileslistParams, opts ...option.RequestOption) (res *pagination.Offset[FileFileslistResponse], err error) {
+	var raw *http.Response
 	opts = append(r.Options[:], opts...)
+	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "files/"
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
+	if err != nil {
+		return nil, err
+	}
+	err = cfg.Execute()
+	if err != nil {
+		return nil, err
+	}
+	res.SetPageConfig(cfg, raw)
+	return res, nil
+}
+
+// Retrieve a list of files. Can be filtered by status and sorted by upload time.
+func (r *FileService) FileslistAutoPaging(ctx context.Context, query FileFileslistParams, opts ...option.RequestOption) *pagination.OffsetAutoPager[FileFileslistResponse] {
+	return pagination.NewOffsetAutoPager(r.Fileslist(ctx, query, opts...))
 }
 
 type FileFileNewResponse struct {
@@ -276,36 +291,6 @@ func (r fileFileSearchResponseResultsHighlightRangeJSON) RawJSON() string {
 }
 
 type FileFileslistResponse struct {
-	Files []FileFileslistResponseFile `json:"files"`
-	// Maximum number of files returned
-	Limit int64 `json:"limit"`
-	// Number of files skipped
-	Offset int64 `json:"offset"`
-	// Total number of files matching the filter
-	Total int64                     `json:"total"`
-	JSON  fileFileslistResponseJSON `json:"-"`
-}
-
-// fileFileslistResponseJSON contains the JSON metadata for the struct
-// [FileFileslistResponse]
-type fileFileslistResponseJSON struct {
-	Files       apijson.Field
-	Limit       apijson.Field
-	Offset      apijson.Field
-	Total       apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *FileFileslistResponse) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r fileFileslistResponseJSON) RawJSON() string {
-	return r.raw
-}
-
-type FileFileslistResponseFile struct {
 	// Time processing was completed (if applicable)
 	CompletionTime time.Time `json:"completion_time" format:"date-time"`
 	// Error message (if status is 'failed')
@@ -317,15 +302,15 @@ type FileFileslistResponseFile struct {
 	// Original name of the file
 	Filename string `json:"filename"`
 	// Current processing status
-	Status FileFileslistResponseFilesStatus `json:"status"`
+	Status FileFileslistResponseStatus `json:"status"`
 	// Time the file was uploaded
-	UploadTime time.Time                     `json:"upload_time" format:"date-time"`
-	JSON       fileFileslistResponseFileJSON `json:"-"`
+	UploadTime time.Time                 `json:"upload_time" format:"date-time"`
+	JSON       fileFileslistResponseJSON `json:"-"`
 }
 
-// fileFileslistResponseFileJSON contains the JSON metadata for the struct
-// [FileFileslistResponseFile]
-type fileFileslistResponseFileJSON struct {
+// fileFileslistResponseJSON contains the JSON metadata for the struct
+// [FileFileslistResponse]
+type fileFileslistResponseJSON struct {
 	CompletionTime apijson.Field
 	Error          apijson.Field
 	FileID         apijson.Field
@@ -337,27 +322,27 @@ type fileFileslistResponseFileJSON struct {
 	ExtraFields    map[string]apijson.Field
 }
 
-func (r *FileFileslistResponseFile) UnmarshalJSON(data []byte) (err error) {
+func (r *FileFileslistResponse) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-func (r fileFileslistResponseFileJSON) RawJSON() string {
+func (r fileFileslistResponseJSON) RawJSON() string {
 	return r.raw
 }
 
 // Current processing status
-type FileFileslistResponseFilesStatus string
+type FileFileslistResponseStatus string
 
 const (
-	FileFileslistResponseFilesStatusPending    FileFileslistResponseFilesStatus = "pending"
-	FileFileslistResponseFilesStatusProcessing FileFileslistResponseFilesStatus = "processing"
-	FileFileslistResponseFilesStatusCompleted  FileFileslistResponseFilesStatus = "completed"
-	FileFileslistResponseFilesStatusFailed     FileFileslistResponseFilesStatus = "failed"
+	FileFileslistResponseStatusPending    FileFileslistResponseStatus = "pending"
+	FileFileslistResponseStatusProcessing FileFileslistResponseStatus = "processing"
+	FileFileslistResponseStatusCompleted  FileFileslistResponseStatus = "completed"
+	FileFileslistResponseStatusFailed     FileFileslistResponseStatus = "failed"
 )
 
-func (r FileFileslistResponseFilesStatus) IsKnown() bool {
+func (r FileFileslistResponseStatus) IsKnown() bool {
 	switch r {
-	case FileFileslistResponseFilesStatusPending, FileFileslistResponseFilesStatusProcessing, FileFileslistResponseFilesStatusCompleted, FileFileslistResponseFilesStatusFailed:
+	case FileFileslistResponseStatusPending, FileFileslistResponseStatusProcessing, FileFileslistResponseStatusCompleted, FileFileslistResponseStatusFailed:
 		return true
 	}
 	return false
