@@ -1,4 +1,4 @@
 configured_endpoints: 3
-openapi_spec_url: https://storage.googleapis.com/stainless-sdk-openapi-specs/acme-ai%2Facme-ai-sdk-f571432cdaa24d3b96dcb9ea6165514e9bbf03c0cdb82fa6f6889291678d8eb5.yml
-openapi_spec_hash: e6ed290f02ba0c04c12f57c176d2af04
-config_hash: ab98c0844a31c69d8cf4deba7d019810
+openapi_spec_url: https://storage.googleapis.com/stainless-sdk-openapi-specs/acme-ai%2Facme-ai-sdk-391524f732886f607ded973ede1d713ae524be9e0e6ddc858992fc5f5231ac09.yml
+openapi_spec_hash: bdb48f537a60a6bf6ebab4249a527218
+config_hash: 4d9e1a0c57c6881b0356eb891fd40f73
