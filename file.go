@@ -63,8 +63,7 @@ func (r *FileService) FileSearch(ctx context.Context, fileID string, query FileF
 	return
 }
 
-// Retrieve the processing status of files. Can be filtered by status and sorted by
-// upload time.
+// Retrieve a list of files. Can be filtered by status and sorted by upload time.
 func (r *FileService) Fileslist(ctx context.Context, query FileFileslistParams, opts ...option.RequestOption) (res *pagination.Offset[FileFileslistResponse], err error) {
 	var raw *http.Response
 	opts = append(r.Options[:], opts...)
@@ -82,8 +81,7 @@ func (r *FileService) Fileslist(ctx context.Context, query FileFileslistParams, 
 	return res, nil
 }
 
-// Retrieve the processing status of files. Can be filtered by status and sorted by
-// upload time.
+// Retrieve a list of files. Can be filtered by status and sorted by upload time.
 func (r *FileService) FileslistAutoPaging(ctx context.Context, query FileFileslistParams, opts ...option.RequestOption) *pagination.OffsetAutoPager[FileFileslistResponse] {
 	return pagination.NewOffsetAutoPager(r.Fileslist(ctx, query, opts...))
 }
